@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebsiteBanHang.Models.SanPham>
+@{
+    ViewBag.Title = "Tìm kiếm";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+
+<h2>Kết quả tìm kiếm: @ViewBag.TuKhoa</h2>
+<div class="card">
+    <div class="card-body ">
+        <p>
+            @Html.ActionLink("Quay về", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-primary font-weight-bold " })
+        </p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th>
+                        @Html.DisplayName("Mã SP")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TenSP)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.HinhAnh)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SoLuongTon)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DonGia)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DaXoa)
+                    </th>
+                    <th>
+                        @Html.DisplayName("Loại")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Hãng")
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenSP)
+                        </td>
+                        <td>
+                            <img src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" style='height:150px;width:150px' />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoLuongTon)
+                        </td>
+                        <td>
+                            @{
+                                string dongia = item.DonGia.Value.ToString("#,##");
+                            }
+                            @Html.DisplayFor(modelItem => dongia)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DaXoa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoai)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NhaSanXuat.TenNSX)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Chỉnh sửa", "ChinhSua", new { id = item.MaSP }) |
+                            @Html.ActionLink("Xóa", "Xoa", new { id = item.MaSP }) |
+                            @Html.ActionLink("Sửa hình", "UploadHinh", new { id = item.MaSP })
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+        
+    </div>
+</div>
+

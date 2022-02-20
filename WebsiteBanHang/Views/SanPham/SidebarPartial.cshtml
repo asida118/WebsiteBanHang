@@ -1,0 +1,92 @@
+﻿@using WebsiteBanHang.Models
+@model IEnumerable<SanPham>
+
+
+<!--Hãng bán chạy-->
+<div class=" rsidebar span_1_of_left">
+    <div class="of-left">
+        <h3 class="cate">Hãng bán chạy nhất</h3>
+    </div>
+    <ul class="menu">
+
+        @foreach (var Item in Model.GroupBy(n => n.NhaSanXuat).Take(5))
+        {
+            <li class="item1">
+                <a href="@Url.Action("SanPham","SanPham",new {@MaNSX=Item.Key.MaNSX})">@Item.Key.TenNSX</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<!--Thẻ bán chạy-->
+<div class="sellers">
+    <div class="of-left-in">
+        <h3 class="tag">Thẻ</h3>
+    </div>
+    <div class="tags">
+        <ul>
+            <li><a href="#">XPS</a></li>
+            <li><a href="#">Inspi</a></li>
+            <li><a href="#">Zephy</a></li>
+            <li><a href="#">ROG</a></li>
+            <li><a href="#">Blade</a></li>
+            <li><a href="#">M15</a></li>
+            <li><a href="#">Auro</a></li>
+            <li><a href="#">G5</a></li>
+            <li><a href="#">G7</a></li>
+            <li><a href="#">Stereo</a></li>
+            <li><a href="#">Moni</a></li>
+            <li><a href="#">Key</a></li>
+
+            <div class="clearfix"> </div>
+        </ul>
+
+    </div>
+
+</div>
+<!--Sản phẩm bán chạy -->
+<div class="product-bottom">
+    <div class="of-left-in">
+        <h3 class="best">Bán chạy</h3>
+    </div>
+    @foreach (var item in Model.Take(3))
+    {
+        <div class="product-go">
+            <div class=" fashion-grid">
+                <a href="@Url.RouteUrl("XemChiTiet",new {@id=item.MaSP, @tensp = item.TenSP })"><img class="img-responsive " src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" alt=""></a>
+
+            </div>
+            <div class=" fashion-grid1">
+                <h6 class="best2">
+                    <a href="@Url.RouteUrl("XemChiTiet",new {@id=item.MaSP, @tensp = item.TenSP })">
+                        @item.TenSP
+                    </a>
+                </h6>
+
+                <span class=" price-in1"> @item.DonGia.Value.ToString("#,##") VNĐ</span>
+            </div>
+
+            <div class="clearfix"> </div>
+        </div>
+    }
+
+
+    @*<div class="product-go">
+        <div class=" fashion-grid">
+            <a href="#"><img class="img-responsive " src="~/Content/HinhAnhSP/alienware-m15-r1-2.png" alt=""></a>
+
+        </div>
+        <div class="fashion-grid1">
+            <h6 class="best2">
+                <a href="#">
+                    Alienware M15 R2
+                </a>
+            </h6>
+
+            <span class=" price-in1"> 37,000,000</span>
+        </div>
+
+        <div class="clearfix"> </div>
+    </div>*@
+
+</div>

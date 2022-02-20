@@ -1,0 +1,246 @@
+﻿<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Store A Ecommerce Category Flat Bootstarp Resposive Website Template | Signle :: w3layouts</title>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/fontawesome/css/all.css" rel="stylesheet" type="text/css" media="all">
+    <link href="~/Content/fontawesome/css/all.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Content/js/jquery.min.js"></script>
+    <!-- Custom Theme files -->
+    <!--theme-style-->
+    <link href="~/Content/css/Home_style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--//theme-style-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="New Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'><!--//fonts-->
+    <!-- start menu -->
+    <link href="~/Content/css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="~/Content/js/memenu.js"></script>
+    <script>$(document).ready(function () { $(".memenu").memenu(); });</script>
+
+
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/simpleCart.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<body>
+    <!--header-->
+    <div class="header">
+        @Html.Partial("~/Views/Layout//HeaderTopPartial.cshtml")
+        <div class="container">
+            <div class="head-top">
+                <div class="logo">
+                    <a href="index.html"><img src="" alt=""></a>
+                </div>
+                @Html.Action("MenuPartial", "Home")
+
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--content-->
+    <!---->
+    <div class="product">
+        <div class="container">
+            <div class="col-md-3 product-price">
+
+                <!--Form tìm kiếm-->
+                <div class="of-left">
+                    <h3 class="cate">Tìm sản phẩm</h3>
+                </div>
+                <div class="input-group row no-gutters" style="margin-top: 1.5em;">
+                    @using(Ajax.BeginForm("KQTimKiemPartial", "SanPham", new AjaxOptions { UpdateTargetId = "DSSanPham", InsertionMode = InsertionMode.Replace}))
+                    {
+                        <div class="col-md-8" style="padding-right: 0px;">
+                            <input type="search" name="sTuKhoaTK" class="form-control rounded" placeholder="Nhập tên sản phẩm" aria-label="Search" aria-describedby="search-addon" />
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+                        </div>
+                    }
+                </div>
+
+                <br />
+
+                @Html.Action("SidebarPartial","SanPham")
+                <!--Hãng bán chạy-->
+                <!--<div class=" rsidebar span_1_of_left">
+                    <div class="of-left">
+                        <h3 class="cate">Hãng bán chạy nhất</h3>
+                    </div>
+                    <ul class="menu">
+                        <li class="item1">
+                            <a href="#">Alienware </a>
+                        </li>
+                        <li class="item2">
+                            <a href="#">Asus </a>
+                        </li>
+                        <li class="item3">
+                            <a href="#">Dell</a>
+                        </li>
+                        <li class="item4">
+                            <a href="#">Razor</a>
+                        </li>
+                    </ul>
+                </div>-->
+                <!--initiate accordion-->
+                <!--<script type="text/javascript">
+                    $(function () {
+                        var menu_ul = $('.menu > li > ul'),
+                            menu_a = $('.menu > li > a');
+                        menu_ul.hide();
+                        menu_a.click(function (e) {
+                            e.preventDefault();
+                            if (!$(this).hasClass('active')) {
+                                menu_a.removeClass('active');
+                                menu_ul.filter(':visible').slideUp('normal');
+                                $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                            } else {
+                                $(this).removeClass('active');
+                                $(this).next().stop(true, true).slideUp('normal');
+                            }
+                        });
+                    });
+                </script>-->
+
+                <!--Thẻ bán chạy-->
+                <!--<div class="sellers">
+                    <div class="of-left-in">
+                        <h3 class="tag">Thẻ</h3>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                            <li><a href="#">XPS</a></li>
+                            <li><a href="#">Inspi</a></li>
+                            <li><a href="#">Zephy</a></li>
+                            <li><a href="#">ROG</a></li>
+                            <li><a href="#">Blade</a></li>
+                            <li><a href="#">M15</a></li>
+                            <li><a href="#">Auro</a></li>
+                            <li><a href="#">G5</a></li>
+                            <li><a href="#">G7</a></li>
+                            <li><a href="#">Stereo</a></li>
+                            <li><a href="#">Moni</a></li>
+                            <li><a href="#">Key</a></li>
+
+                            <div class="clearfix"> </div>
+                        </ul>
+
+                    </div>
+
+                </div>-->
+                <!--Sản phẩm bán chạy -->
+                <!--<div class="product-bottom">
+                    <div class="of-left-in">
+                        <h3 class="best">Bán chạy</h3>
+                    </div>
+                    <div class="product-go">
+                        <div class=" fashion-grid">
+                            <a href="#"><img class="img-responsive " src="~/Content/HinhAnhSP/alienware-m15-r1-1.png" alt=""></a>
+
+                        </div>
+                        <div class=" fashion-grid1">
+                            <h6 class="best2">
+                                <a href="#">
+                                    Alienware M15 R1
+                                </a>
+                            </h6>
+
+                            <span class=" price-in1"> 35,000,000</span>
+                        </div>
+
+                        <div class="clearfix"> </div>
+                    </div>
+                    <div class="product-go">
+                        <div class=" fashion-grid">
+                            <a href="#"><img class="img-responsive " src="~/Content/HinhAnhSP/alienware-m15-r1-2.png" alt=""></a>
+
+                        </div>
+                        <div class="fashion-grid1">
+                            <h6 class="best2">
+                                <a href="#">
+                                    Alienware M15 R2
+                                </a>
+                            </h6>
+
+                            <span class=" price-in1"> 37,000,000</span>
+                        </div>
+
+                        <div class="clearfix"> </div>
+                    </div>
+
+                </div>-->
+
+            </div>
+
+            <!--Content sản phẩm-->
+            @RenderBody()
+
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//content-->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-top-at">
+
+                <div class="col-md-4 amet-sed">
+                    <h4>Về cửa hàng</h4>
+                    <ul class="nav-bottom">
+                        <li><a href="#">Hướng dẫn mua hàng</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="contact.html">Bảo hành</a></li>
+                        <li><a href="#">Vận chuyển</a></li>
+                        <li><a href="#">Thành viên</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 amet-sed ">
+                    <h4>Thông tin liên hệ</h4>
+
+                    <p>
+                        95 Trần Thiện Chánh,
+                    </p>
+                    <p>Phuờng 12, Quận 10,TP.HCM</p>
+                    <p>Hotline:  1900.69.3399</p>
+                    <ul class="social">
+                        <li><a href="#"><i> </i></a></li>
+                        <li><a href="#"><i class="twitter"> </i></a></li>
+                        <li><a href="#"><i class="rss"> </i></a></li>
+                        <li><a href="#"><i class="gmail"> </i></a></li>
+
+                    </ul>
+                </div>
+                <div class="col-md-4 amet-sed">
+                    <h4>Bản tin</h4>
+                    <p>
+                        Đăng ký để nhận tin khuyến mãi mới nhất
+                    </p>
+                    <form>
+                        <input type="text" value="" onfocus="this.value='';" onblur="if (this.value == '') {this.value ='';}">
+                        <input type="submit" value="Đăng ký">
+                    </form>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="footer-class">
+            <p>© 2015 New store All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+        </div>
+    </div>
+</body>
+</html>

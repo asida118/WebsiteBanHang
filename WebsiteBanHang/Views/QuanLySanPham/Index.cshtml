@@ -1,0 +1,36 @@
+﻿@using WebsiteBanHang.Models;
+@model IEnumerable<SanPham>
+@{
+    ViewBag.Title = "Quản lý sản phẩm";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 mb-md-3">
+                @Html.ActionLink("Thêm sản phẩm", "TaoMoi", null, htmlAttributes: new { @class = "btn btn-sm btn-warning font-weight-bold " })
+            </div>
+            <div class="col-md-6">
+                @using (Html.BeginForm("TKSanPham", "QuanLySanPham",FormMethod.Get, new {@class = "d-none d-sm-inline-block form-inline mr-auto float-right ml-md-3 my-2 my-md-0 mw-100 navbar-search" }))
+                {
+                    <div class="input-group">
+                        <input type="text" name="TuKhoa" id="inputValue1"
+                               class="form-control bg-light border-0 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+                
+        <div id="divPartialView">
+            @Html.Partial("_IndexPartial")
+        </div>
+    </div>
+</div>

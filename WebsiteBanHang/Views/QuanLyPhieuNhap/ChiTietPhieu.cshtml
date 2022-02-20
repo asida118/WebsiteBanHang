@@ -1,0 +1,63 @@
+﻿@using WebsiteBanHang.Models
+@model PhieuNhap
+@{
+    ViewBag.Title = "ChiTietPhieu";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+    IEnumerable<ChiTietPhieuNhap> lstctpn = ViewBag.lstctpn as IEnumerable<ChiTietPhieuNhap>;
+}
+
+<h2>@Html.ActionLink("Quản lý phiếu nhập", "Index") > Xem phiếu nhập @Model.MaPN</h2>
+<div class="card">
+    <div class="card-body">
+
+        <div class="form-group row pb-2">
+            <div class=" col-md-6">
+                <label class="col-form-label font-weight-bold ">Nhà cung cấp</label>
+                <select class="MaNCC form-control" name="MaNCC">
+                    <option value="@Model.MaNCC">@Model.NhaCungCap.TenNCC</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="col-form-label font-weight-bold ">Ngày nhập</label>
+                <input type="text" class="form-control" value="@Model.NgayNhap" />
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <table class="tblChiTietPhieuNhap table  table-hover">
+            <tr class="trFirstChild">
+                <td class="col-form-label font-weight-bold">Sản phẩm</td>
+                <td class="col-form-label font-weight-bold">Đơn giá nhập</td>
+                <td class="col-form-label font-weight-bold">Số lượng nhập</td>
+                <td></td>
+            </tr>
+
+            @foreach (var item in lstctpn)
+            {
+                <tr class="trAppend table-borderless">
+                    <!--Cột tên sản phẩm-->
+                    <td>
+                        <select class="ddlSanPham" name="">
+                            <option value="@item.MaSP"> @item.SanPham.TenSP</option>
+                        </select>
+                    </td>
+                    <!--Cột đơn giá sản phẩm-->
+                    <td>
+                        <input name="" class="txtDonGia" value="@item.DonGiaNhap" />
+                    </td>
+                    <!--Cột số lượng sản phẩm-->
+                    <td>
+                        <input name="" class="txtSoLuong" value="@item.SoLuongNhap" />
+                    </td>
+                </tr>
+            }
+        </table>
+
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-sm-6">
+                @Html.ActionLink("Trở về", "Index", null, htmlAttributes: new { @class = "btn btn-sm btn-secondary font-weight-bold" })
+            </div>
+        </div>
+    </div>
+</div>
+

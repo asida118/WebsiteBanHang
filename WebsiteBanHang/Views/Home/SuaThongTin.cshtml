@@ -1,0 +1,97 @@
+﻿@model WebsiteBanHang.Models.ThanhVien
+@{
+    ViewBag.Title = "SuaThongTin";
+    Layout = "~/Views/Layout/RegisterLayout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $('#SuaMatKhau,#NhapLaiMatKhau').on('keyup', function () {
+            if ($('#SuaMatKhau').val() == $('#NhapLaiMatKhau').val()) {
+                $("#MessConfirmPass").text("");
+            } else {
+                $("#MessConfirmPass").text("Mật khẩu không trùng khớp.")
+            }
+        });
+    });
+</script>
+
+<div class="container">
+    <div class=" register">
+        <h1 style="padding-top: 0">Thông tin thành viên</h1>
+        @* Form cho phần sửa thông tin thành viên *@
+        @using (Html.BeginForm("SuaThongTin", "Home", FormMethod.Post))
+        {
+            <div class="col-md-6 register-top-grid">
+                <h3>Thông tin cá nhân</h3>
+                @Html.HiddenFor(model => model.MaThanhVien)
+                @Html.HiddenFor(model => model.TaiKhoan)
+                @Html.HiddenFor(model => model.CauHoi)
+                @Html.HiddenFor(model => model.MatKhau)
+                @Html.HiddenFor(model => model.MaLoaiTV)
+                <!--Họ tên-->
+                <div>
+                    <span>@Html.LabelFor(model => model.HoTen)</span>
+                    @Html.EditorFor(model => model.HoTen)
+                    @Html.ValidationMessageFor(model => model.HoTen, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!--Địa chỉ-->
+                <div>
+                    <span>@Html.LabelFor(model => model.DiaChi)</span>
+                    @Html.EditorFor(model => model.DiaChi)
+                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!--Email-->
+                <div>
+                    <span>@Html.LabelFor(model => model.Email)</span>
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!--Số điện thoại-->
+                <div>
+                    <span>@Html.LabelFor(model => model.SoDienThoai)</span>
+                    @Html.EditorFor(model => model.SoDienThoai)
+                    @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!-- Câu hỏi-->
+                <div>
+                    <span>@Html.LabelFor(model => model.CauHoi)</span>
+                    @* hiển thị câu hỏi lên dropdownlist qua viewbag *@
+                    <span>@Model.CauHoi</span>
+                    @*@Html.DropDownList("CauHoi", null, htmlAttributes: new { @disabled = "disabled" })*@
+                </div>
+                <!-- Câu trả lời-->
+                <div>
+                    @Html.EditorFor(model => model.CauTraLoi)
+                    @Html.ValidationMessageFor(model => model.CauTraLoi, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!-- Nút lưu thông tin-->
+                <input type="submit" value="Lưu thông tin">
+            </div>
+        }
+        @* Form cho phần đổi mật khẩu *@
+        @using (Html.BeginForm("SuaMatKhau", "Home", FormMethod.Post))
+        {
+            <div class="col-md-6 register-bottom-grid">
+                <h3>Đổi mật khẩu</h3>
+                <!-- Mật khẩu-->
+                <div>
+                    <span>@Html.LabelFor(model => model.MatKhau)</span>
+                    @* Đổi id để tránh trùng với id bên thẻ hidden matkhau ở trên *@
+                    @Html.PasswordFor(model => model.MatKhau,new {@id = "SuaMatKhau" })
+                    @Html.ValidationMessageFor(model => model.MatKhau, "", new { @style = "margin-bottom:15px; color:#DC143C;" })
+                </div>
+                <!-- Nhập lại mật khẩu-->
+                <div>
+                    <span style="font-weight: bold;">Nhập lại mật khẩu</span>
+                    @Html.Password("NhapLaiMatKhau")
+                    <span style="color:crimson" id="MessConfirmPass"></span>
+                </div>
+                <input type="submit" value="Đổi mật khẩu">
+            </div>
+
+        }
+        <div class="clearfix"> </div>
+    </div>
+</div>
+

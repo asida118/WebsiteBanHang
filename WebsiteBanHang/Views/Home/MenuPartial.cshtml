@@ -1,0 +1,62 @@
+﻿@using WebsiteBanHang.Models
+@model IEnumerable<SanPham>
+
+<div class=" h_menu4">
+    <ul class="memenu skyblue">
+        <li class="showhide" style="display:none;"><span class="title">Menu</span><span class="icon1"></span><span class="icon2"></span></li>
+        <li class="active grid" style="display:inline;"><a class="color8" href="@Url.Action("Index","Home")">Home</a></li>
+        @*Url.action trả về kiểu đường dẫn url tương ứng với controller và action : ~/Controllers/Home/Index*@
+
+        @* Gom nhóm sản phẩm theo từng loại sp (gom nhóm lại những cái trùng nhau) *@
+        @foreach (var groupItem in Model.GroupBy(n => n.LoaiSanPham))
+        {
+            //key đại diện cho thuộc tính đc gom nhóm, nếu sản phẩm gom nhóm theo loại thì key ở đây là loại sp
+            if (groupItem.Key != null)
+            {
+                <li style="display:inline;">
+                    <a class="color1" href="@Url.Action("SanPham","SanPham",new { @MaLoaiSP = groupItem.Key.MaLoaiSP})">@groupItem.Key.TenLoai</a> @*Lấy ra tên loại của key(loại sp)*@
+                    <div class="mepanel">
+                        <div class="row">
+                            <div class="col1">
+                                <div class="h_nav">
+                                    <ul>
+                                        @*Gom nhóm các loại sản phẩm theo nhà sản xuất*@
+                                        @foreach (var item in groupItem.GroupBy(n => n.NhaSanXuat))
+                                        {
+                                            if (item.Key != null)   //key này đại diện cho nhà sx
+                                            {
+                                                @*Lấy ra tên nsx của key(nsx)*@
+                                                <li><a href="@Url.Action("SanPham","SanPham",new { @MaLoaiSP=groupItem.Key.MaLoaiSP, @MaNSX=item.Key.MaNSX})">@item.Key.TenNSX</a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+
+        <li class="grid">
+            <a class="color2" href="#">	Thương Hiệu</a>
+            <div class="mepanel">
+                <div class="row">
+                    @*Gom nhóm sản phẩm theo nhà sản xuất *@
+                    @foreach (var groupItem in Model.GroupBy(n => n.NhaSanXuat))
+                    {
+                        if (groupItem.Key != null)
+                        {
+                            <div class="col1">
+                                <div class="h_nav">
+                                    <a href="@Url.Action("SanPham","SanPham",new { @MaNSX=groupItem.Key.MaNSX})"><h4>@groupItem.Key.TenNSX</h4></a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+

@@ -1,0 +1,33 @@
+﻿@{
+    @* Khởi tạo control Webgrid
+       *Với source là model truyền vào
+       *rowsPerPage là số dòng của bảng dữ liệu trên 1 trang *@
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+@if (grid != null)
+{
+    <div id="list" class="table-responsive">
+        @* Thể hiện dữ liệu qua webgird *@
+        @grid.GetHtml(
+        tableStyle: "table table-bordered table-hover", //class css cho thẻ table
+        headerStyle: "",    //class css cho tiêu đề table
+        footerStyle: "text-center",     //class css cho phẩn phân trang phia dưới
+        numericLinksCount: 10,      //số trang hiển thị trên phân trang
+        mode: WebGridPagerModes.All, firstText: "Trang đầu", lastText: "Trang cuối",    //text cho phân trang
+        columns: grid.Columns(
+            grid.Column("MaSP", "Mã SP"),   //Thuộc tính tên cột trùng tên thuộc tính trong csdl
+            grid.Column("TenSP", "Tên sản phẩm"),
+            grid.Column("HinhAnh", "Hình ảnh", format: p => Html.Raw("<img width=\"150\" height=\"150\" src=\"../Content/HinhAnhSP/" + p.HinhAnh + "\">")),
+            grid.Column("SoLuongTon", "Tồn kho"),
+            grid.Column("DonGia", "Đơn giá", format: p => p.DonGia.ToString("#,##")), //Dùng format để định dạng kiểu dữ liệu mong muốn
+            grid.Column("DaXoa", "Tình trạng", format: (p) => (p.DaXoa == false) ? Html.Raw("Tồn tại") : Html.Raw("Đã xóa")), //Hiển thị text theo tình trạng
+            grid.Column("LoaiSanPham.TenLoai", "Loại"), //Lấy tên loại trong bảng loại sp thay vì mã sp
+            grid.Column("NhaSanXuat.TenNSX", "Hãng"),
+            grid.Column(format: p => Html.ActionLink("Chỉnh sửa", "ChinhSua", new { id = p.MaSP })),
+            grid.Column(format: p => Html.ActionLink("Xóa", "Xoa", new { id = p.MaSP })),
+            grid.Column(format: p => Html.ActionLink("Sửa Hình", "UploadHinh", new { id = p.MaSP }))
+            )
+        )
+    </div>
+}

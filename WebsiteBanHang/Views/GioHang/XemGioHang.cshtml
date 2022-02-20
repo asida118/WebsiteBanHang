@@ -1,0 +1,205 @@
+﻿@using WebsiteBanHang.Models
+@model List<ItemGioHang>
+@{
+    ViewBag.Title = "XemGioHang";
+    Layout = "~/Views/Layout/RegisterLayout.cshtml";
+}
+
+<div class="container" style="text-align:left;">
+    @using (Html.BeginForm("DatHang", "GioHang", FormMethod.Post, new { @id = "myform" }))
+    {
+        @* Nếu người dùng chưa đăng nhập thì hiển thị form nhập thông tin  *@
+        if (Session["TaiKhoan"] == null)
+        {
+            <div class=" register">
+                <h1>Thông tin khách hàng</h1>
+                @Html.Hidden("MaThanhVien", 1)
+                <div class="col-md-6 register-top-grid">
+                    <!--Tên khách hàng-->
+                    <div>
+                        <span style="font-weight:bold">Tên khách hàng</span>
+                        @Html.TextBox("TenKH")
+                        <p style="margin-bottom: 0.5em; color: #DC143C;" id="TB_TenKH"></p>
+                    </div>
+                    <!--Địa chỉ-->
+                    <div>
+                        <span style="font-weight:bold">Địa chỉ</span>
+                        @Html.TextBox("DiaChi")
+                        <p style="margin-bottom: 0.5em; color: #DC143C;" id="TB_DiaChi"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 register-bottom-grid">
+                    <!--Email-->
+                    <div>
+                        <span style="font-weight:bold">Email</span>
+                        @Html.TextBox("Email")
+                        <p style="margin-bottom: 0.5em; color: #DC143C;" id="TB_Email"></p>
+                    </div>
+                    <!--Số điện thoại-->
+                    <div>
+                        <span style="font-weight:bold">Điện thoại</span>
+                        @Html.TextBox("SoDienThoai")
+                        <p style="margin-bottom: 0.5em; color: #DC143C;" id="TB_SDT"></p>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            @* Validate cho form khách hàng bằng Jquery *@
+            <script>
+                $("#btnDatHang").click(function (event) {
+                    var loi = 0;
+
+                    if ($("#TenKH").val() == "") {
+                        $("#TB_TenKH").text("Không được bỏ trống tên khách hàng");
+                        loi++;
+                    }
+                    else
+                        $("#TB_TenKH").text("");
+
+                    if ($("#DiaChi").val() == "") {
+                        $("#TB_DiaChi").text("Không được bỏ trống địa chỉ");
+                        loi++;
+                    }
+                    else
+                        $("#TB_DiaChi").text("");
+
+                    var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,6})+$/;
+                    if ($("#Email").val() == "") {
+                        $("#TB_Email").text("Không được bỏ trống Email");
+                        loi++;
+                    } else if (!regex.test($("#Email").val())) {
+                        $("#TB_Email").text("Email không hợp lệ");
+                        loi++;
+                    }
+                    else
+                        $("#TB_Email").text("");
+
+                    if ($("#SoDienThoai").val() == "") {
+                        $("#TB_SDT").text("Không được bỏ trống số diện thoại");
+                        loi++;
+                    }
+                    else
+                        $("#TB_SDT").text("");
+
+                    if (loi != 0)
+                        return false;
+                    else
+                        $("#myform").submit();
+
+                });
+            </script>
+        }
+
+        <div class="check">
+            @if (Model == null || Model.Count == 0) //nếu list giỏ hàng rỗng thì xuất thông báo
+            {
+                <h1 style="color:#000000; text-align:center; font-size: 3em">Giỏ hàng rỗng (Vui lòng chọn sản phẩm)</h1>
+            }
+            else
+            {
+                <h1 id="EmptyCard" style="color:#000000">Giỏ hàng (@ViewBag.TongSoLuong)</h1>
+            }
+            <!--Danh sách sản phẩm trong giỏ-->
+            <div class="col-md-9 cart-items">
+                @foreach (var item in Model)
+                {
+                    <div class="cart-header">
+                        <!--Nút sửa sp trong giỏ hàng-->
+                        <a href="@Url.Action("SuaGioHang",new {@MaSP = item.MaSP })" class="editIcon"><i class="fas fa-pen-square fa-lg" style="color: rgba(239, 95, 33);"></i></a>
+                        <!--Nút xóa sp trong giỏ hàng-->
+                        <a href="@Url.Action("XoaGioHang",new {@MaSP = item.MaSP })" class="delIcon"><i class="fas fa-trash fa-lg" style="color: rgba(239, 95, 33);"></i> </a>
+
+                        <!--Thông tin từng sản phẩm-->
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" class="img-responsive" alt="" />
+                            </div>
+                            <div class="cart-item-info">
+                                <h3><a href="#">@item.TenSP</a></h3>
+                                <ul class="qty">
+                                    <li><p>Số lượng: @item.SoLuong</p></li>
+                                    <li><p>Đơn giá: @item.DonGia.ToString("#,##") VNĐ</p></li>
+                                </ul>
+
+                                <div class="delivery">
+                                    <p style="font-weight:bold;">Thành Tiền: @item.ThanhTien.ToString("#,##") VNĐ</p>
+                                    <span>Giao hàng trong 2-3 ngày làm việc.</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (Model != null && Model.Count != 0)
+            {
+                <div class="col-md-3 cart-total">
+                    <a class="continue" href="@Url.Action("Index", "Home")">Tiếp tục mua hàng</a>
+                    <div class="price-details">
+                        <h3>Đơn giá chi tiết</h3>
+                        <span>Tổng cộng</span>
+                        <span class="total1">@ViewBag.TongTien.ToString("#,##")</span>
+                        <span>Giảm giá</span>
+                        <span class="total1">---</span>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <ul class="total_price">
+                        <li class="last_price"> <h4>Tổng cộng</h4></li>
+                        <li class="last_price"><span>@ViewBag.TongTien.ToString("#,##") VNĐ</span></li>
+                        <div class="clearfix"> </div>
+                    </ul>
+
+                    <div class="clearfix"></div>
+                    <a id="btnDatHang" class="order" onclick='document.forms["myform"].submit();'>Đặt hàng</a>
+                </div>
+            }
+
+            <div class="clearfix"> </div>
+        </div>
+    }
+
+</div>
+}
+
+<style>
+    .register {
+        padding: 2em 0;
+        border-bottom: 1px solid #C4C3C3;
+    }
+    .register-bottom-grid input[type="text"] {
+        width: 100%;
+        padding: 1em;
+        margin: 1em 0;
+        background: none;
+        outline: none;
+        border: 1px solid #A09F9F;
+        -webkit-appearance: none;
+    }
+
+    .editIcon {
+        cursor: pointer;
+        position: absolute;
+        right: 2em;
+        top: 0px;
+        -webkit-transition: color 0.2s ease-in-out;
+        -moz-transition: color 0.2s ease-in-out;
+        -o-transition: color 0.2s ease-in-out;
+        transition: color 0.2s ease-in-out;
+    }
+
+    .delIcon {
+        cursor: pointer;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        -webkit-transition: color 0.2s ease-in-out;
+        -moz-transition: color 0.2s ease-in-out;
+        -o-transition: color 0.2s ease-in-out;
+        transition: color 0.2s ease-in-out;
+    }
+</style>
+
+

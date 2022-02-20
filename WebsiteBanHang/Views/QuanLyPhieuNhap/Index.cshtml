@@ -1,0 +1,35 @@
+﻿@model IEnumerable<WebsiteBanHang.Models.PhieuNhap>
+@{
+    ViewBag.Title = "Quản lý phiếu nhập";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+
+<h2>@ViewBag.Title </h2>
+<div class="card">
+    <div class="card-body">
+        <p>
+            @Html.ActionLink("Nhập hàng", "NhapHang", null, htmlAttributes: new { @class = "btn btn-sm btn-warning font-weight-bold " })
+        </p>
+        @if (grid != null)
+        {
+            <div id="list" class="table-responsive">
+                @grid.GetHtml(
+                tableStyle: "table table-bordered table-hover",
+                headerStyle: "",
+                footerStyle: "text-center",
+                numericLinksCount: 10,
+                mode: WebGridPagerModes.All, firstText: "Trang đầu", lastText: "Trang cuối",
+                columns: grid.Columns(
+                    grid.Column("MaPN", "Mã phiếu nhập"),
+                    grid.Column("NgayNhap", "Ngày nhập"),
+                    grid.Column("NhaCungCap.TenNCC", "Nhà Cung Cấp"),
+                    grid.Column(format: p => Html.ActionLink("Xem phiếu nhập", "ChiTietPhieu", new { id = p.MaPN }))
+                    )
+                )
+            </div>
+        }
+    </div>
+</div>
+

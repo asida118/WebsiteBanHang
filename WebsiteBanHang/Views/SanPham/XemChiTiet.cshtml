@@ -1,0 +1,145 @@
+﻿@model WebsiteBanHang.Models.SanPham
+
+@{
+    ViewBag.Title = "XemChiTiet";
+    Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+<div class="col-md-9 product-price1" style="text-align:left;">
+    <div class="col-md-5 single-top">
+        <div class="flexslider">
+            <ul class="slides">
+                <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh1)">
+                    <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh1)" />
+                </li>
+                <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh2)">
+                    <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh2)" />
+                </li>
+                <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh3)">
+                    <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh3)" />
+                </li>
+                <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh4)">
+                    <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh4)" />
+                </li>
+            </ul>
+        </div>
+
+        <script defer src="~/Content/js/jquery.flexslider.js"></script>
+        <link rel="stylesheet" href="~/Content/css/flexslider.css" type="text/css" media="screen" />
+
+        <script>
+            // Can also be used with $(document).ready()
+            $(window).load(function () {
+                $('.flexslider').flexslider({
+                    animation: "slide",
+                    controlNav: "thumbnails"
+                });
+            });
+        </script>
+    </div>
+    
+    <div class="col-md-7 single-top-in simpleCart_shelfItem">
+        <div class="single-para ">
+            <h4>@Model.TenSP</h4>
+            <div class="star-on">
+                <ul class="star-footer">
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                </ul>
+                <div class="review"> <a href="#"> @Model.LuotXem Lượt xem</a> </div>
+                <div class="clearfix"> </div>
+            </div>
+            <h5 class="item_price">Giá: @Model.DonGia.Value.ToString("#,##") VNĐ</h5>
+            <div style="border-bottom: 1px solid #C4C3C3;">
+                <p style="font-weight:bold;font-size:18px">Cấu hình:</p>
+                @Html.Raw(Model.CauHinh)
+            </div>
+            @* Xử lý thêm giỏ hàng và tồn kho *@
+            @Html.TextBox("SoLuongDat", "1", htmlAttributes: new { type = "number", min = "1", max = Model.SoLuongTon, step = "1" })
+            <a href="@Url.Action("ThemGioHang","GioHang", new { @MaSP= Model.MaSP, @strURL = Request.RawUrl, @SoLuong = "0" })" id="Addcart" class="add-cart item_add" style="margin-left: 0.5em; margin-right: 0.5em">Thêm vào giỏ</a>
+            
+            @*@Ajax.ActionLink("Thêm vào giỏ", "ThemGioHangAjax", "GioHang",
+                             new { @MaSP = Model.MaSP, @strURL = Request.Url.ToString(), @SoLuong = "0" },
+                             new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "divCart", InsertionMode = InsertionMode.Replace },
+                             new { @class = "add-cart item_add", @id= "Addcart", @style = "margin-left: 0.5em; margin-right: 0.5em" })*@
+
+            <span>Tồn kho: @Model.SoLuongTon</span>
+        </div>
+    </div>
+
+    <div class="clearfix"> </div>
+
+    <div class="cd-tabs">
+        <nav>
+            <ul class="cd-tabs-navigation">
+                <li><a data-content="fashion" class="selected" href="#0">Thông tin mô tả </a></li>
+                <li><a data-content="cinema" href="#0">Thông số kĩ thuật</a></li>
+            </ul>
+        </nav>
+        <ul class="cd-tabs-content">
+            <li data-content="fashion" class="selected">
+                <div class="facts">
+                    @Html.Raw(Model.MoTa)
+                </div>
+            </li>
+            <li data-content="cinema">
+                <div class="facts1">
+                    <div class="color">
+                        <p>Color</p>
+                        <span>Blue, Black, Red</span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="color">
+                        <p>Size</p>
+                        <span>S, M, L, XL</span>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </li>
+            
+            <div class="clearfix"></div>
+        </ul>
+    </div>
+
+</div>
+
+
+<script>
+    
+    $(document).ready(function () {
+        @* Hàm thêm số lượng đặt hàng *@
+        //Khi click thì đường dẫn sẽ cộng thêm giá trị trong box số lượng
+        $('#Addcart').click(function () {
+            debugger;
+            var link = $('#Addcart');
+            var textValue = $('#SoLuongDat').val();
+            link.attr('href', link.attr('href') + textValue);
+        });
+
+        @* Hàm chỉnh sửa số lượng nếu người dùng nhập số lớn hơn max *@
+        $("#SoLuongDat").change(function () {
+            var max = parseInt($(this).attr('max'));
+            var min = parseInt($(this).attr('min'));
+            if ($(this).val() > max) {
+                $(this).val(max);
+            }
+            else if ($(this).val() < min) {
+                $(this).val(min);
+            }
+        });
+
+        ////Khi click xong thì đường dẫn sẽ xóa giá trị trong box số lượng
+        //$('#Addcart').mouseup(function () {
+        //    var link = $('#Addcart');
+        //    var textValue = $('#SoLuongDat').val();
+        //    if (textValue.length == 1)
+        //        link.attr('href', link.attr('href').slice(0,-1));
+        //    else
+        //        link.attr('href', link.attr('href').slice(0,-2));
+        //});
+    });
+</script>
+
