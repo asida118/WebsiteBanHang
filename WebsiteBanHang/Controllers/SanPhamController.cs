@@ -109,6 +109,8 @@ namespace WebsiteBanHang.Controllers
         [HttpGet]
         public ActionResult KQTimKiem(string sTuKhoa, int? page)
         {
+            if (sTuKhoa == null || sTuKhoa == "")
+                ViewBag.TuKhoaNull = "Null";
             //Phân trang
             if (Request.HttpMethod != "GET")
                 page = 1;
@@ -132,6 +134,8 @@ namespace WebsiteBanHang.Controllers
         //Tìm kiếm trong danh sách sản phẩm theo từ khóa
         public ActionResult KQTimKiemPartial(string sTuKhoaTK, int? page)
         {
+            if (sTuKhoaTK == null || sTuKhoaTK == "")
+                ViewBag.TuKhoaNull = "Null";
             //Phân trang
             if (Request.HttpMethod != "GET")
                 page = 1;
@@ -144,6 +148,7 @@ namespace WebsiteBanHang.Controllers
             TempData.Keep("DSSanPham");
             //Tìm sản phẩm theo từ khóa trong danh sách các sp
             var lstTKSP = lstSP.Where(n => n.TenSP.ToUpper().Contains(sTuKhoaTK.ToUpper())).ToList();
+            
             ViewBag.sTuKhoaTK = sTuKhoaTK;
 
             return PartialView(lstTKSP.OrderBy(n => n.TenSP).ToPagedList(PageNumber, PageSize));

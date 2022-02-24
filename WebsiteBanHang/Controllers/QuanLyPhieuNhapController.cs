@@ -13,6 +13,7 @@ namespace WebsiteBanHang.Controllers
         QuanLyBanHangEntities db = new QuanLyBanHangEntities();
 
         //Trang chủ nhập hàng
+        [HttpGet]
         public ActionResult Index()
         {
             return View(db.PhieuNhaps.OrderBy(n=>n.MaPN));

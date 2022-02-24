@@ -10,7 +10,7 @@
         text-overflow: ellipsis;
     }
 </style>
-@if (Model == null || Model.Count == 0)
+@if (Model == null || Model.Count == 0 || ViewBag.TuKhoaNull == "Null")
 {
     <h1 style="color:black; text-align:center">Không tìm thấy sản phẩm</h1>
 }

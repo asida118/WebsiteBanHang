@@ -13,10 +13,12 @@ namespace WebsiteBanHang.Controllers
     {
         QuanLyBanHangEntities db = new QuanLyBanHangEntities();
         // GET: QuanLyThanhVien
+        [HttpGet]
         public ActionResult Index()
         {
             return View(db.ThanhViens.OrderBy(n => n.MaThanhVien));
         }
+
         [HttpGet]
         public ActionResult TaoMoi()
         {
